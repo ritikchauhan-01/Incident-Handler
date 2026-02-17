@@ -172,31 +172,28 @@ PATCH /api/incidents/{id}
 
 # Design Decisions
 
--> UUID used as primary key for safer public exposure
--> Server-side pagination to support large datasets
--> JPA Specification used for dynamic filtering/search
--> DTOs separate API contract from entity model
--> Global exception handler for clean API responses
--> Debounced search to reduce server load
--> Responsive CSS instead of UI libraries to keep bundle lightweight
+- UUID used as the primary key for safer public exposure.
+- Server-side pagination implemented to support large datasets efficiently.
+- JPA Specifications used for dynamic filtering and searching.
+- DTOs used to separate the API contract from the entity model.
+- Global exception handler implemented for consistent and clean API responses.
+- Debounced search implemented on the frontend to reduce server load.
+- Custom responsive CSS used instead of UI libraries to keep the bundle lightweight.
 
----------------
+---
 
-# TradeOffs
+# Trade-offs
 
-No authentication added (not required for assignment)
-Simple CSS used instead of component library
+- Authentication and authorization were not implemented (not required for this assignment).
+- Simple CSS was used instead of a component library to keep the project minimal and focused.
 
----------------
+---
 
 # Future Improvements
--> Add Authentication and Authorization ( JWT )
--> WebSocket live incident updates
--> Unit & Integration tests
--> Add Audit logs/history tracking
--> Manage the concurrency for multiple user updating the same incident.
--> Docker deployment 
 
-
-
-
+- Add authentication and authorization (JWT-based security).
+- Implement WebSocket support for real-time incident updates.
+- Add unit and integration tests.
+- Implement audit logs and history tracking.
+- Handle concurrency issues when multiple users update the same incident (e.g., optimistic locking).
+- Add Docker support for containerized deployment.
