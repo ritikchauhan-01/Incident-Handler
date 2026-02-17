@@ -65,7 +65,7 @@ Run using Maven:
 mvn spring-boot:run
 ```
 
-OR you can check this link how to Run the Project in SpringBoot - 
+OR you can check this link how to Run the SpringBoot Project in Intellij - 
 https://guneetgstar.medium.com/how-to-run-spring-boot-applications-on-intellij-idea-for-free-381a2661d409
 
 The server runs at:
