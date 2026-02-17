@@ -201,12 +201,12 @@ PATCH /api/incidents/{id}
 ---------------------
 
 # HLD
-<img width="1024" height="1536" alt="Incident_Tracker_HLD" src="https://github.com/user-attachments/assets/a099abfa-cf1b-4554-9b1a-ce7bfe076d97" />
+<img width="300" height="600" alt="Incident_Tracker_HLD" src="https://github.com/user-attachments/assets/a099abfa-cf1b-4554-9b1a-ce7bfe076d97" />
 
 ----------------------
 
 # Home Page
-<img width="800" height="900" alt="Incident_Tracker_1" src="https://github.com/user-attachments/assets/7ad018bf-aab5-4dd3-bd27-23b8b06c3743" />
+<img width="1919" height="946" alt="Incident_Tracker_1" src="https://github.com/user-attachments/assets/7ad018bf-aab5-4dd3-bd27-23b8b06c3743" />
 
 ---------------------------
 
