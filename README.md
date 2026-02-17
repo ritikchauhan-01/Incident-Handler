@@ -197,4 +197,43 @@ PATCH /api/incidents/{id}
 - Implement audit logs and history tracking.
 - Handle concurrency issues when multiple users update the same incident (e.g., optimistic locking).
 - Add Docker support for containerized deployment.
-- 
+
+
+# High Level Diagram
+                         ┌──────────────────────────┐
+                         │        Frontend          │
+                         │--------------------------│
+                         │ - Incident List          │
+                         │ - Filters & Search       │
+                         │ - Pagination Controls    │
+                         │   (page, size)           │
+                         └─────────────┬────────────┘
+                                       │
+                                       │ REST API Call
+                                       │ GET /api/incidents?page=0&size=10
+                                       ▼
+                ┌────────────────────────────────────────┐
+                │              Backend API               │
+                │----------------------------------------│
+                │ Controller Layer                       │
+                │  - Accepts page & size params          │
+                │                                        │
+                │ Service Layer                          │
+                │  - Applies business logic              │
+                │  - Creates Pageable object             │
+                │                                        │
+                │ Repository Layer (JPA)                 │
+                │  - findAll(Pageable pageable)          │
+                └─────────────┬──────────────────────────┘
+                              │
+                              │ Generates SQL
+                              ▼
+                ┌────────────────────────────────────────┐
+                │              MySQL Database            │
+                │----------------------------------------│
+                │ SELECT * FROM incidents                │
+                │ ORDER BY created_at DESC               │
+                │ LIMIT 10 OFFSET 0;                     │
+                └────────────────────────────────────────┘
+
+
