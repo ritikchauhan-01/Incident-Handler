@@ -227,7 +227,8 @@ PATCH /api/incidents/{id}
 ----------------------
 
 # Home Page
-<img width="1919" height="946" alt="Incident_Tracker_1" src="https://github.com/user-attachments/assets/7ad018bf-aab5-4dd3-bd27-23b8b06c3743" />
+<img width="1900" height="922" alt="Screenshot 2026-02-18 013044" src="https://github.com/user-attachments/assets/06f13011-cf88-43f5-8e64-88be3de8bc70" />
+
 
 ---------------------------
 
