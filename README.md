@@ -199,56 +199,60 @@ PATCH /api/incidents/{id}
 - Add Docker support for containerized deployment.
 
 
-# High Level Diagram
-                              ┌────────────────────────────┐
-                              │          Frontend          │
-                              │        (React App)         │
-                              │----------------------------│
-                              │ - Create Incident Form     │
-                              │ - Incident List View       │
-                              │ - Filters & Search         │
-                              │ - Pagination Controls      │
-                              │   (page, size, sort)       │
-                              └─────────────┬──────────────┘
-                                            │
-                                            │ REST API
-                                            │
-                                            ▼
-        ┌────────────────────────────────────────────────────────┐
-        │                     Backend (Spring Boot)              │
-        │--------------------------------------------------------│
-        │ 1️⃣ Controller Layer                                    │
-        │    - Exposes REST APIs                                  │
-        │    - Accepts page, size, filters                        │
-        │                                                        │
-        │ 2️⃣ Service Layer                                       │
-        │    - Business logic                                     │
-        │    - Status transitions                                 │
-        │    - Creates Pageable object                            │
-        │                                                        │
-        │ 3️⃣ Repository Layer (Spring Data JPA)                  │
-        │    - Uses JPA Specifications                            │
-        │    - findAll(Pageable pageable)                         │
-        │                                                        │
-        │ 4️⃣ Exception Handler                                   │
-        │    - Standardized error responses                       │
-        └─────────────┬──────────────────────────────────────────┘
-                      │
-                      │ Generates SQL Query
-                      ▼
-        ┌────────────────────────────────────────────────────────┐
-        │                    MySQL Database                      │
-        │--------------------------------------------------------│
-        │ incident table                                         │
-        │                                                        │
-        │ SELECT * FROM incidents                                │
-        │ WHERE severity='SEV1'                                  │
-        │ ORDER BY created_at DESC                               │
-        │ LIMIT 10 OFFSET 0;                                     │
-        │                                                        │
-        │ Indexed Columns:                                       │
-        │ - id (UUID - PK)                                       │
-        │ - created_at                                           │
-        │ - severity                                             │
-        │ - status                                               │
-        └────────────────────────────────────────────────────────┘
+# 🏗 High-Level Design — Production Incident Tracker
+
+
+```
+                                 +-------------------------------+
+                                 |           Frontend            |
+                                 |          (React App)          |
+                                 |-------------------------------|
+                                 | - Create Incident Form        |
+                                 | - Incident List View          |
+                                 | - Filters & Search            |
+                                 | - Pagination Controls         |
+                                 |   (page, size, sort)          |
+                                 +---------------+---------------+
+                                                 |
+                                                 |  REST API
+                                                 |  GET /api/incidents?page=0&size=10
+                                                 v
+                                 +-----------------------------------------------+
+                                 |              Backend (Spring Boot)            |
+                                 |-----------------------------------------------|
+                                 | 1. Controller Layer                           |
+                                 |    - Exposes REST APIs                        |
+                                 |    - Accepts page, size, filters              |
+                                 |                                               |
+                                 | 2. Service Layer                              |
+                                 |    - Business logic                           |
+                                 |    - Status transitions                       |
+                                 |    - Creates Pageable object                  |
+                                 |                                               |
+                                 | 3. Repository Layer (Spring Data JPA)        |
+                                 |    - Uses JPA Specifications                  |
+                                 |    - findAll(Pageable pageable)               |
+                                 |                                               |
+                                 | 4. Global Exception Handler                   |
+                                 |    - Standardized error responses             |
+                                 +-----------------------+-----------------------+
+                                                         |
+                                                         |  Generates SQL
+                                                         v
+                                 +-----------------------------------------------+
+                                 |                MySQL Database                 |
+                                 |-----------------------------------------------|
+                                 | Table: incidents                              |
+                                 |                                               |
+                                 | SELECT * FROM incidents                       |
+                                 | WHERE severity = 'SEV1'                       |
+                                 | ORDER BY created_at DESC                      |
+                                 | LIMIT 10 OFFSET 0;                            |
+                                 |                                               |
+                                 | Indexed Columns:                              |
+                                 | - id (UUID - Primary Key)                     |
+                                 | - created_at                                  |
+                                 | - severity                                    |
+                                 | - status                                      |
+                                 +-----------------------------------------------+
+```
