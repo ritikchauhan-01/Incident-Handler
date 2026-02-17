@@ -35,16 +35,10 @@ Production_Incident
 
 2. Start the MySQL server.
 
-3. Run the schema file inside MySQL:
+3. Run the schema inside file in MySQL:
 
 ```
 Production_Incident/backend/assignment/schema.sql
-```
-
-Example:
-
-```bash
-mysql -u root -p < schema.sql
 ```
 
 ---
