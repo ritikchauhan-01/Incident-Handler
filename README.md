@@ -135,11 +135,32 @@ PATCH /api/incidents/{id}
 ---
 
 # Frontend Setup
+
+## Note : 
+   - Requirement : you should have Node.js version 20.19+ or 22.12+ installed in your local
+   
 ```
 cd frontend
+node --version ( check version )
 npm install 
 npm run dev
 ```
+
+If getting this Error : 
+```
+npm : File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is disabled on this system. For more 
+information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ npm run dev
++ ~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+```
+
+Run this cmd
+```
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
 
 App runs at :
 ```
