@@ -112,7 +112,7 @@ POST /api/incidents
 ## 3️⃣ Get Incidents (Paginated & Filtered)
 
 ```http
-GET /api/incidents?page=0&size=10&sortBy=createdAt&sortDirection=desc&service=PAYMENT&severity=SEV1&severity=SEV2&status=OPEN&search=payment
+GET /api/incidents?page=0&size=15&sortBy=createdAt&sortDirection=desc&service=PAYMENT&severity=SEV1&severity=SEV2&status=OPEN&search=payment
 ```
 
 ---
@@ -134,16 +134,69 @@ PATCH /api/incidents/{id}
 
 ---
 
-# 🧱 Tech Stack
+# Frontend Setup
+```
+cd frontend
+npm install 
+npm run dev
+```
 
-- Backend: Spring Boot  
-- Database: MySQL  
-- Frontend: React  
+App runs at :
+```
+http://localhost:5173
+```
 
----
+# API Endpoints
 
-# 📌 Notes
+## Create Incident
+```
+POST  /api/incidents
+```
 
-- Ensure MySQL is running before starting the backend.
-- Update database credentials before running the application.
-- The application auto-seeds data only if the database is empty.
+## Get Incidents ( Pagination + Filter )
+```
+GET /api/incidents?page=0&size=15&search=&severity=&status=&sort=createdAt
+```
+
+## Get Incident By ID
+```
+GET /api/incidents/{id}
+```
+
+## update Incident
+```
+PATCH /api/incidents/{id}
+```
+
+---------------
+
+# Design Decisions
+
+-> UUID used as primary key for safer public exposure
+-> Server-side pagination to support large datasets
+-> JPA Specification used for dynamic filtering/search
+-> DTOs separate API contract from entity model
+-> Global exception handler for clean API responses
+-> Debounced search to reduce server load
+-> Responsive CSS instead of UI libraries to keep bundle lightweight
+
+---------------
+
+# TradeOffs
+
+No authentication added (not required for assignment)
+Simple CSS used instead of component library
+
+---------------
+
+# Future Improvements
+-> Add Authentication and Authorization ( JWT )
+-> WebSocket live incident updates
+-> Unit & Integration tests
+-> Add Audit logs/history tracking
+-> Manage the concurrency for multiple user updating the same incident.
+-> Docker deployment 
+
+
+
+
