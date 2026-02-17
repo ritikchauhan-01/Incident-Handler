@@ -200,40 +200,55 @@ PATCH /api/incidents/{id}
 
 
 # High Level Diagram
-                         ┌──────────────────────────┐
-                         │        Frontend          │
-                         │--------------------------│
-                         │ - Incident List          │
-                         │ - Filters & Search       │
-                         │ - Pagination Controls    │
-                         │   (page, size)           │
-                         └─────────────┬────────────┘
-                                       │
-                                       │ REST API Call
-                                       │ GET /api/incidents?page=0&size=10
-                                       ▼
-                ┌────────────────────────────────────────┐
-                │              Backend API               │
-                │----------------------------------------│
-                │ Controller Layer                       │
-                │  - Accepts page & size params          │
-                │                                        │
-                │ Service Layer                          │
-                │  - Applies business logic              │
-                │  - Creates Pageable object             │
-                │                                        │
-                │ Repository Layer (JPA)                 │
-                │  - findAll(Pageable pageable)          │
-                └─────────────┬──────────────────────────┘
-                              │
-                              │ Generates SQL
-                              ▼
-                ┌────────────────────────────────────────┐
-                │              MySQL Database            │
-                │----------------------------------------│
-                │ SELECT * FROM incidents                │
-                │ ORDER BY created_at DESC               │
-                │ LIMIT 10 OFFSET 0;                     │
-                └────────────────────────────────────────┘
-
-
+                              ┌────────────────────────────┐
+                              │          Frontend          │
+                              │        (React App)         │
+                              │----------------------------│
+                              │ - Create Incident Form     │
+                              │ - Incident List View       │
+                              │ - Filters & Search         │
+                              │ - Pagination Controls      │
+                              │   (page, size, sort)       │
+                              └─────────────┬──────────────┘
+                                            │
+                                            │ REST API
+                                            │
+                                            ▼
+        ┌────────────────────────────────────────────────────────┐
+        │                     Backend (Spring Boot)              │
+        │--------------------------------------------------------│
+        │ 1️⃣ Controller Layer                                    │
+        │    - Exposes REST APIs                                  │
+        │    - Accepts page, size, filters                        │
+        │                                                        │
+        │ 2️⃣ Service Layer                                       │
+        │    - Business logic                                     │
+        │    - Status transitions                                 │
+        │    - Creates Pageable object                            │
+        │                                                        │
+        │ 3️⃣ Repository Layer (Spring Data JPA)                  │
+        │    - Uses JPA Specifications                            │
+        │    - findAll(Pageable pageable)                         │
+        │                                                        │
+        │ 4️⃣ Exception Handler                                   │
+        │    - Standardized error responses                       │
+        └─────────────┬──────────────────────────────────────────┘
+                      │
+                      │ Generates SQL Query
+                      ▼
+        ┌────────────────────────────────────────────────────────┐
+        │                    MySQL Database                      │
+        │--------------------------------------------------------│
+        │ incident table                                         │
+        │                                                        │
+        │ SELECT * FROM incidents                                │
+        │ WHERE severity='SEV1'                                  │
+        │ ORDER BY created_at DESC                               │
+        │ LIMIT 10 OFFSET 0;                                     │
+        │                                                        │
+        │ Indexed Columns:                                       │
+        │ - id (UUID - PK)                                       │
+        │ - created_at                                           │
+        │ - severity                                             │
+        │ - status                                               │
+        └────────────────────────────────────────────────────────┘
