@@ -198,61 +198,25 @@ PATCH /api/incidents/{id}
 - Handle concurrency issues when multiple users update the same incident (e.g., optimistic locking).
 - Add Docker support for containerized deployment.
 
+---------------------
 
 # 🏗 High-Level Design — Production Incident Tracker
+<img width="1024" height="1536" alt="Incident_Tracker_HLD" src="https://github.com/user-attachments/assets/a099abfa-cf1b-4554-9b1a-ce7bfe076d97" />
+
+----------------------
+
+# Home Page
+<img width="1916" height="987" alt="Incident_Tracker_1" src="https://github.com/user-attachments/assets/7ad018bf-aab5-4dd3-bd27-23b8b06c3743" />
+
+---------------------------
+
+# Create Incident Page
+<img width="1919" height="946" alt="Incident_Tracker_2" src="https://github.com/user-attachments/assets/d2f9a417-b410-40d0-ac25-aa02001137bf" />
+
+---------------------------
+
+# Update Incident Page
+<img width="1919" height="933" alt="Incident_Tracker_3" src="https://github.com/user-attachments/assets/7c8393ae-fec0-4712-93f6-3306ae652b07" />
 
 
-```
-                                 +-------------------------------+
-                                 |           Frontend            |
-                                 |          (React App)          |
-                                 |-------------------------------|
-                                 | - Create Incident Form        |
-                                 | - Incident List View          |
-                                 | - Filters & Search            |
-                                 | - Pagination Controls         |
-                                 |   (page, size, sort)          |
-                                 +---------------+---------------+
-                                                 |
-                                                 |  REST API
-                                                 |  GET /api/incidents?page=0&size=10
-                                                 v
-                                 +-----------------------------------------------+
-                                 |              Backend (Spring Boot)            |
-                                 |-----------------------------------------------|
-                                 | 1. Controller Layer                           |
-                                 |    - Exposes REST APIs                        |
-                                 |    - Accepts page, size, filters              |
-                                 |                                               |
-                                 | 2. Service Layer                              |
-                                 |    - Business logic                           |
-                                 |    - Status transitions                       |
-                                 |    - Creates Pageable object                  |
-                                 |                                               |
-                                 | 3. Repository Layer (Spring Data JPA)        |
-                                 |    - Uses JPA Specifications                  |
-                                 |    - findAll(Pageable pageable)               |
-                                 |                                               |
-                                 | 4. Global Exception Handler                   |
-                                 |    - Standardized error responses             |
-                                 +-----------------------+-----------------------+
-                                                         |
-                                                         |  Generates SQL
-                                                         v
-                                 +-----------------------------------------------+
-                                 |                MySQL Database                 |
-                                 |-----------------------------------------------|
-                                 | Table: incidents                              |
-                                 |                                               |
-                                 | SELECT * FROM incidents                       |
-                                 | WHERE severity = 'SEV1'                       |
-                                 | ORDER BY created_at DESC                      |
-                                 | LIMIT 10 OFFSET 0;                            |
-                                 |                                               |
-                                 | Indexed Columns:                              |
-                                 | - id (UUID - Primary Key)                     |
-                                 | - created_at                                  |
-                                 | - severity                                    |
-                                 | - status                                      |
-                                 +-----------------------------------------------+
-```
+
