@@ -1,80 +1,152 @@
 # Incident Tracker App
 
-Web stack application to create, browse , search and manage production Incidents
+A full-stack web application to create, browse, search, and manage production incidents.
 
-## Feature
-Create incidents with validation
-Fetch incidents from a database
-Incidents shown in a paginated table 
-Search, filter, and sort incidents on the columsn 
-View incident details and update status
-Seed database with ~200 records
+---
 
-## Project Structure
+## 🚀 Features
 
-`
-  Production_Incident
-    | ------backend
-    | ------frontend
-`
+- Create incidents with validation  
+- Fetch incidents from the database  
+- Display incidents in a paginated table  
+- Search, filter, and sort incidents by columns  
+- View incident details and update status  
+- Automatically seed the database with ~200 records on startup  
 
-## Backend Setup
+---
 
-### STEP 1: Create Database
+## 📁 Project Structure
 
-1) How to setup a MySql : https://dev.mysql.com/doc/mysql-getting-started/en/
-2) After this run the MySQL server
-3) Run this schema inside MySQL server in terminal . Folder Path for Schema -> `Production_Incident\backend\assignment\schema.sql`
+```
+Production_Incident
+│
+├── backend
+└── frontend
+```
 
-### STEP 2 : Configure application.yml
-update the credentials for db
-`
+---
+
+# 🖥 Backend Setup
+
+## Step 1: Create the Database
+
+1. Install MySQL:  
+   https://dev.mysql.com/doc/mysql-getting-started/en/
+
+2. Start the MySQL server.
+
+3. Run the schema file inside MySQL:
+
+```
+Production_Incident/backend/assignment/schema.sql
+```
+
+Example:
+
+```bash
+mysql -u root -p < schema.sql
+```
+
+---
+
+## Step 2: Configure `application.yml`
+
+Update your database credentials:
+
+```yaml
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/incident_tracker?useSSL=false
-    username: {your username}
-    password: {your password}
-`
+    username: your_username
+    password: your_password
+```
 
-### RUN the Backend Server
-1) How to Run the Project in SpringBoot - https://guneetgstar.medium.com/how-to-run-spring-boot-applications-on-intellij-idea-for-free-381a2661d409
+---
 
-Server Runs at : 
-`http://localhost:8080`
+## ▶ Run the Backend Server
 
-DataBase will auto-seed ~200 incident in DB when you run the SpringBoot Application
+Run using Maven:
 
-### API Endpoints
-1) Get Inciden by ID
-   `GET : /api/incidents/{id}`
+```bash
+mvn spring-boot:run
+```
 
-2) Create Incident
-   `POST : /api/incidents
-   {
-      "title": "Incident 1",
-      "service": "FRONTEND",
-      "severity": "SEV3",
-      "status": "OPEN",
-      "owner": "ritik@example.com",
-      "summary": "Page allignment issue"
-    }
-   `
+The server runs at:
 
-4) Get Incidents ( Paginated & filtered)
-   `GET : /api/incidents?page=0&size=10&sortBy=createdAt&sortDirection=desc&service=PAYMENT&severity=SEV1&severity=SEV2&status=OPEN&search=payment`
+```
+http://localhost:8080
+```
 
-5) Update Incident
-   `PATCH : /api/incidents/{id}
-     {
-      "status": "MITIGATED",
-        "summary": "Temporary mitigation deployed"
-      }
-   `
+The database will automatically seed ~200 incident records when the application starts.
 
+---
 
+# 📡 API Endpoints
 
+## 1️⃣ Get Incident by ID
 
+```http
+GET /api/incidents/{id}
+```
 
+---
 
+## 2️⃣ Create Incident
 
+```http
+POST /api/incidents
+```
 
+### Request Body
+
+```json
+{
+  "title": "Incident 1",
+  "service": "FRONTEND",
+  "severity": "SEV3",
+  "status": "OPEN",
+  "owner": "ritik@example.com",
+  "summary": "Page alignment issue"
+}
+```
+
+---
+
+## 3️⃣ Get Incidents (Paginated & Filtered)
+
+```http
+GET /api/incidents?page=0&size=10&sortBy=createdAt&sortDirection=desc&service=PAYMENT&severity=SEV1&severity=SEV2&status=OPEN&search=payment
+```
+
+---
+
+## 4️⃣ Update Incident
+
+```http
+PATCH /api/incidents/{id}
+```
+
+### Request Body
+
+```json
+{
+  "status": "MITIGATED",
+  "summary": "Temporary mitigation deployed"
+}
+```
+
+---
+
+# 🧱 Tech Stack
+
+- Backend: Spring Boot  
+- Database: MySQL  
+- Frontend: React  
+
+---
+
+# 📌 Notes
+
+- Ensure MySQL is running before starting the backend.
+- Update database credentials before running the application.
+- The application auto-seeds data only if the database is empty.
