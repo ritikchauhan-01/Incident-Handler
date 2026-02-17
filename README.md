@@ -201,7 +201,7 @@ PATCH /api/incidents/{id}
 ---------------------
 
 # HLD
-<img width="1000" height="550" alt="Incident_Tracker_HLD" src="https://github.com/user-attachments/assets/a099abfa-cf1b-4554-9b1a-ce7bfe076d97" />
+<img width="900" height="550" alt="Incident_Tracker_HLD" src="https://github.com/user-attachments/assets/a099abfa-cf1b-4554-9b1a-ce7bfe076d97" />
 
 ----------------------
 
